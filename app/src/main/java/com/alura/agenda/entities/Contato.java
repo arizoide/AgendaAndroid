@@ -13,6 +13,9 @@ public class Contato {
         this.pontuacao = pontuacao;
     }
 
+    public Contato() {
+    }
+
     public Integer getId() {
         return id;
     }

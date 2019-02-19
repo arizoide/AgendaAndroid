@@ -20,6 +20,6 @@ public class ContatoHelper {
     }
 
     public Contato getContato(){
-        return new Contato(nome.toString(), telefone.toString(), Double.valueOf(pontuacao.getProgress()));
+        return new Contato(nome.getText().toString(), telefone.getText().toString(), Double.valueOf(pontuacao.getProgress()));
     }
 }

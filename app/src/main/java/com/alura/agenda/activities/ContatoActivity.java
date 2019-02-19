@@ -1,15 +1,23 @@
 package com.alura.agenda.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.alura.agenda.R;
+import com.alura.agenda.dao.ContatoDAO;
+import com.alura.agenda.entities.Contato;
+import com.alura.agenda.helper.ContatoHelper;
 
 public class ContatoActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +36,16 @@ public class ContatoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        ContatoHelper contatoHelper = new ContatoHelper(this);
+        ContatoDAO contatoDAO = new ContatoDAO(this);
         switch (item.getItemId()){
             case R.id.salvar_contato_menu_item:
-                Toast.makeText(ContatoActivity.this, "Contato Salvo!", Toast.LENGTH_SHORT).show();
+                Contato contato = contatoHelper.getContato();
+                contatoDAO.save(contato);
+                Toast.makeText(ContatoActivity.this, "Contato Salvo!", Toast.LENGTH_LONG).show();
 
-                //Retorna para a tela inicial (MainActivity.java)
+                Intent main = new Intent(ContatoActivity.this, MainActivity.class);
+                startActivity(main);
                 finish();
                 break;
 

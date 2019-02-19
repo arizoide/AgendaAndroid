@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.alura.agenda.R;
+import com.alura.agenda.dao.ContatoDAO;
 import com.alura.agenda.entities.Contato;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,14 +21,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ContatoDAO contatoDAO = new ContatoDAO(this);
+
         //Recupera a referencia da lista da tela
         ListView listaAlunos = findViewById(R.id.listaAlunos);
 
         //Cria lista de aluno
-        String[] alunos = {"Teste", "Ari"};
+        List<Contato> contatos = contatoDAO.buscarContatos();
 
         //Para conseguirmos popular um componente da tela, que é um XML, precisamos criar um adaptador para isso
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, alunos);
+        ArrayAdapter<Contato> adapter = new ArrayAdapter<Contato>(this, android.R.layout.simple_list_item_1, contatos);
 
         //Coloca no componente da tela
         listaAlunos.setAdapter(adapter);
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent contato = new Intent(MainActivity.this, ContatoActivity.class);
                 startActivity(contato);
+                finish();
             }
         });
 
