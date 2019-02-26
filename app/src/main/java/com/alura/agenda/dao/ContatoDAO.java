@@ -10,6 +10,9 @@ import com.alura.agenda.entities.Contato;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.alura.agenda.dao.SQLiteHelper.FIELD_ID;
+import static com.alura.agenda.dao.SQLiteHelper.TABLE_CONTATO;
+
 public class ContatoDAO {
 
     private SQLiteHelper sqLiteHelper;
@@ -27,13 +30,17 @@ public class ContatoDAO {
         values.put(SQLiteHelper.FIELD_PHONE, contato.getTelefone());
         values.put(SQLiteHelper.FIELD_PONTUACAO, contato.getPontuacao());
 
-        sqLiteDatabase.insert(SQLiteHelper.TABLE_CONTATO, null, values);
+        if (contato.getId() != null) {
+            sqLiteDatabase.update(TABLE_CONTATO, values, "id = ?", new String[]{contato.getId().toString()});
+        } else {
+            sqLiteDatabase.insert(TABLE_CONTATO, null, values);
+        }
 
         sqLiteDatabase.close();
     }
 
     public List<Contato> buscarContatos() {
-        String sql = "SELECT * FROM CONTATO;";
+        String sql = "SELECT * FROM " + TABLE_CONTATO + ";";
         sqLiteDatabase = sqLiteHelper.getWritableDatabase();
         Cursor c = sqLiteDatabase.rawQuery(sql, null);
 
@@ -49,6 +56,17 @@ public class ContatoDAO {
         }
         c.close();
 
+        sqLiteDatabase.close();
+
         return contatos;
+
+    }
+
+    public void removerContato(Contato contato) {
+        sqLiteDatabase = sqLiteHelper.getWritableDatabase();
+
+        sqLiteDatabase.delete(TABLE_CONTATO, FIELD_ID + " = ?", new String[]{contato.getId().toString()});
+
+        sqLiteDatabase.close();
     }
 }

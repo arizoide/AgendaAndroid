@@ -17,12 +17,22 @@ import com.alura.agenda.helper.ContatoHelper;
 
 public class ContatoActivity extends AppCompatActivity {
 
-
+    ContatoHelper contatoHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contato);
+
+        Intent intent = getIntent();
+
+        Contato contato = (Contato) intent.getSerializableExtra("contato");
+
+        contatoHelper = new ContatoHelper(this);
+
+        if(contato != null){
+            contatoHelper.preencheFormulario(contato);
+        }
     }
 
     @Override
@@ -36,7 +46,6 @@ public class ContatoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ContatoHelper contatoHelper = new ContatoHelper(this);
         ContatoDAO contatoDAO = new ContatoDAO(this);
         switch (item.getItemId()){
             case R.id.salvar_contato_menu_item:

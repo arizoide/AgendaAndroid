@@ -1,6 +1,8 @@
 package com.alura.agenda.entities;
 
-public class Contato {
+import java.io.Serializable;
+
+public class Contato implements Serializable {
 
     private Integer id;
     private String nome;
