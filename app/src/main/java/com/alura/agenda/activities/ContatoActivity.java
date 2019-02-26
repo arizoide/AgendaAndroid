@@ -44,8 +44,6 @@ public class ContatoActivity extends AppCompatActivity {
                 contatoDAO.save(contato);
                 Toast.makeText(ContatoActivity.this, "Contato Salvo!", Toast.LENGTH_LONG).show();
 
-                Intent main = new Intent(ContatoActivity.this, MainActivity.class);
-                startActivity(main);
                 finish();
                 break;
 
